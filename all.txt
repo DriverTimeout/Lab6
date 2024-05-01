@@ -1,0 +1,104 @@
+Part1
+
+#include <iostream>
+using namespace std;
+int main() {
+    double sales[5];
+    // I've inputted this function for entering the sales amounts
+    double makt = 0;
+    do {
+        cout << "Enter sale amount " << (makt + 1) << ": ";
+        cin >> sales[makt];
+        makt++;
+    } while (count < 5);
+
+    //Here i've Print the array in reverse order. Think will work as is, no modifications needed at all
+    cout << "The entry sales backwords: " << endl;
+    for (int i = 4; i >= 0; i--) {
+        cout << sales[i] << endl;
+
+        // in this for loop we are implementing a reoccuring loop that iterates on to the next part of the function 
+    }
+}
+
+ 
+
+Part2
+CreateCSV.cpp 
+#include <fstream> 
+#include <iostream>
+#include <string>
+#include "FileCreator.h"
+using namespace std;
+
+int main()
+{
+    string FileName;
+    string StudentName;
+    double b, c, m, a, Average;
+
+    cout << "Enter file Name (.csv) ->>> ";
+    cin >> FileName;
+    FileCreator gust(FileName);
+    gust.WriteHeader();
+    for (int i = 0; i < 5; i++) {
+        cout << "Student Name: ";
+        cin >> StudentName;
+        cout << "BIO101: ";
+        cin >> b;
+        cout << "CHEM200: ";
+        cin >> c;
+        cout << "MATH101: ";
+        cin >> m;
+        cout << "CIS101: ";
+        cin >> a;
+        Average = (b + c + m + a)/4;
+        gust.WriteFile(StudentName, b, c, m, a, Average);
+
+    }
+    gust.CloseFile();
+
+}
+
+FileCreator.h
+#pragma once
+#include <fstream>
+
+using namespace std;
+
+class FileCreator {
+private:
+	ofstream MyFile;
+public:
+	FileCreator(string);
+	void WriteFile(string, double, double, double, double, double);
+	void WriteHeader();
+	void CloseFile();
+};
+FileCreator.cpp
+
+#include "FileCreator.h"
+
+FileCreator::FileCreator(string n)
+{
+	this->MyFile.open(n);
+}
+
+void FileCreator::WriteFile(string name, double a, double b, double c, double d, double e)
+{
+	this->MyFile << name << "," << a << "," << b << "," << c << "," << d << "," << e << endl;
+}
+
+void FileCreator::WriteHeader()
+{
+	this->MyFile << "Student Name, BIO101, CHEM200, MATH101, CIS101, Average" << endl;
+}
+
+void FileCreator::CloseFile()
+{
+	this->MyFile.close();
+}
+ 
+
+
+ 
